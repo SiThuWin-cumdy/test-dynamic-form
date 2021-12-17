@@ -1,0 +1,56 @@
+<div class="container">
+  <form [formGroup]="myFormGroup">
+
+    <div class="row " style="margin: 5%;">
+      <h2>Dynamic Form</h2>
+      <div *ngFor="let form of formList">
+
+        <div class="col-md-10" *ngIf="form.type == 'text' || form.type == 'email' || form.type =='number'">
+          <mat-form-field class="" appearance="fill">
+            <mat-label>{{form.fieldName}}</mat-label>
+            <input matInput placeholder="" [value]="form.value" [type]="form.type" formControlName="{{form.fieldName}}">
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-10" *ngIf="form.type == 'multiline'">
+          <mat-form-field class=" " appearance="fill">
+            <mat-label>{{form.fieldName}}</mat-label>
+            <textarea matInput placeholder="" style="min-height: 50px;"
+              formControlName="{{form.fieldName}}">{{form.value}}</textarea>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-10" *ngIf="form.type == 'select'">
+          <mat-form-field appearance="fill">
+            <mat-label>{{form.fieldName}}</mat-label>
+            <mat-select formControlName="{{form.fieldName}}">
+              <mat-option *ngFor="let op of form.options" [value]="op">
+                {{op}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+      </div>
+
+      <div class="col-md-10">
+        <button type="button" mat-flat-button color="primary" (click)="submit()">
+          Submit
+        </button>
+      </div>
+    </div>
+  </form> 
+
+  <ng-container *ngIf="showLoading">
+    <div class="overlay"></div>
+    <mat-progress-spinner [mode]="'indeterminate'"></mat-progress-spinner>
+  </ng-container>
+
+
+  <div class="row" *ngFor="let data of submittedData">
+    <div class="col-md-10">
+      {{data}}
+    </div>
+  </div>
+
+</div>
